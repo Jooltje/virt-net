@@ -1,0 +1,36 @@
+# dhcpd.conf
+#
+# Sample configuration file for ISC dhcpd
+#
+
+# option definitions common to all supported networks...
+option domain-name "network.lan";
+option domain-name-servers 8.8.8.8, 8.8.4.4;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+# The ddns-updates-style parameter controls whether or not the server will
+# attempt to do a DNS update when a lease is confirmed. We default to the
+# behavior of the version 2 packages ('none', since DHCP v2 didn't
+# have support for DDNS.)
+ddns-update-style interim;
+
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+authoritative;
+
+# Use this to send dhcp log messages to a different log file (you also
+# have to hack syslog.conf to complete the redirection).
+log-facility local7;
+
+# Local network
+
+subnet 192.168.111.0 netmask 255.255.255.0 {
+	option routers 192.168.111.1;
+	option broadcast-address 192.168.111.255;
+	range 192.168.111.50 192.168.111.150;
+        next-server 192.168.111.1;
+	filename "/pxelinux.0";
+	ddns-domainname "network.lan";
+}

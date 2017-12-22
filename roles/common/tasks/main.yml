@@ -1,0 +1,24 @@
+---
+
+- name: update
+  become: true
+  become_user: root
+  become_method: sudo
+  apt: 
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: upgrade
+  become: true
+  become_user: root
+  become_method: sudo
+  apt:
+    upgrade: dist
+
+- name: autoremove
+  become: true
+  become_user: root
+  become_method: sudo
+  apt:
+    autoremove: yes
+  

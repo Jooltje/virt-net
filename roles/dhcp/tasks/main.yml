@@ -1,0 +1,18 @@
+---
+
+- name: install dhcp server
+  become: yes
+  apt:
+    name: isc-dhcp-server
+    state: latest
+
+- name: configure dhcp server
+  become: yes
+  template:
+    src: dhcpd.conf.j2
+    dest: /etc/dhcp/dhcpd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart dhcp server
