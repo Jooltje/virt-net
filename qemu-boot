@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+name=$1
+#remote=$2
+remote=$1
+disk="$name.img"
+
+if [ ! -f "$disk" ]; then
+    qemu-img create -f raw "$disk" 8G
+fi
+
+qemu-system-x86_64 -m 256M -boot order=cnd -hda "$disk" -cdrom mini.iso -enable-kvm -vga qxl -spice "port=$remote,disable-ticketing" -daemonize
